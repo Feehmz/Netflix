@@ -1,0 +1,15 @@
+.movie-details-container {
+  padding: 30px;
+}
+
+.movie-image {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+}
+
+.movie-details-container p {
+  max-width: 600px;
+  margin-top: 15px;
+  opacity: 0.8;
+}
