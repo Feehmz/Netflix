@@ -1,0 +1,7 @@
+.notfound {
+  padding: 80px 30px 30px;
+}
+
+.notfound a {
+  color: red;
+}

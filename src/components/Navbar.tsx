@@ -1,13 +1,60 @@
-import { Link } from "react-router-dom";
-import "../styles/global.css";
+import { NavLink, useNavigate } from "react-router-dom";
+import type { FormEvent } from "react";  // 👈 importiamo il tipo
+import "../styles/Navbar.css";
 
 export default function Navbar() {
+  const navigate = useNavigate();
+
+  // search nella navbar
+function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const raw = formData.get("q");
+    const query = typeof raw === "string" ? raw.trim() : "";
+
+    if (query.length > 0) {
+      navigate(`/search?q=${encodeURIComponent(query)}`);
+    }
+}
+
+
   return (
     <nav className="navbar">
-      <Link to="/" className="logo">NetFlexx</Link>
-      <div className="nav-links">
-        <Link to="/">Home</Link>
-        <Link to="/movie/1">Film esempio</Link>
+      <div className="navbar-left">
+        <NavLink to="/" className="navbar-logo">
+          NetFlexx
+        </NavLink>
+
+        <NavLink to="/" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} end>
+          Home
+        </NavLink>
+
+        <NavLink to="/movies" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+          Film
+        </NavLink>
+
+        <NavLink to="/tv" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+          Serie TV
+        </NavLink>
+
+        <NavLink to="/favorites" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+          Preferiti
+        </NavLink>
+
+        <NavLink to="/about" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+          About
+        </NavLink>
+      </div>
+
+      <div className="navbar-right">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="q"
+            placeholder="Cerca..."
+            className="navbar-search-input"
+          />
+        </form>
       </div>
     </nav>
   );

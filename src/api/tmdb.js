@@ -18,3 +18,8 @@ export const tvAPI = {
   popular: () => get(`${BASE}/tv/popular?api_key=${API_KEY}`),
   trending: () => get(`${BASE}/trending/tv/week?api_key=${API_KEY}`)
 };
+
+export const searchAPI = {
+  multi: (query) =>
+    get(`${BASE}/search/multi?api_key=${API_KEY}&query=${query}`),
+};

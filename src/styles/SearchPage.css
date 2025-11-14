@@ -1,0 +1,45 @@
+.search-page {
+  padding: 80px 30px 30px;
+}
+
+.loading {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.error {
+  color: #ff5a5a;
+  margin-top: 20px;
+}
+
+.empty {
+  margin-top: 20px;
+  opacity: 0.6;
+}
+
+.search-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+.search-card {
+  text-decoration: none;
+  color: white;
+}
+
+.search-card img {
+  width: 100%;
+  border-radius: 6px;
+  transition: transform 0.2s ease;
+}
+
+.search-card img:hover {
+  transform: scale(1.08);
+}
+
+.search-card p {
+  margin-top: 8px;
+  text-align: center;
+}
