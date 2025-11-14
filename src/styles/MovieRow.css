@@ -1,0 +1,33 @@
+.movie-row {
+  margin-bottom: 30px;
+}
+
+.movie-row h2 {
+  margin: 10px 0;
+}
+
+.movie-row-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding-bottom: 10px;
+}
+
+.movie-row-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.movie-row-scroll::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+.movie-row-item img {
+  width: 160px;
+  border-radius: 6px;
+  transition: transform 0.2s;
+}
+
+.movie-row-item img:hover {
+  transform: scale(1.1);
+}

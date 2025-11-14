@@ -19,3 +19,20 @@
   margin-top: 8px;
   font-size: 18px;
 }
+
+.home-container {
+  padding: 30px;
+}
+
+.search-bar {
+  margin-bottom: 25px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}

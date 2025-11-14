@@ -1,38 +1,68 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getPopularMovies } from "../api/tmdb";
+import {
+  getPopularMovies,
+  getTopRatedMovies,
+  getTrendingMovies,
+  getUpcomingMovies,
+  searchMovies
+} from "../api/tmdb";
+
+import MovieRow from "./MovieRow";
 import "../styles/HomePage.css";
 
 export default function HomePage() {
-  const [movies, setMovies] = useState([]);
+  const [popular, setPopular] = useState([]);
+  const [topRated, setTopRated] = useState([]);
+  const [trending, setTrending] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
+
+  const [searchText, setSearchText] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    async function loadMovies() {
-      const data = await getPopularMovies();
-      setMovies(data);
+    async function loadAll() {
+      setPopular(await getPopularMovies());
+      setTopRated(await getTopRatedMovies());
+      setTrending(await getTrendingMovies());
+      setUpcoming(await getUpcomingMovies());
     }
-    loadMovies();
+    loadAll();
   }, []);
+
+  async function handleSearch(e) {
+    const q = e.target.value;
+    setSearchText(q);
+
+    if (q.length >= 2) {
+      setSearchResults(await searchMovies(q));
+    } else {
+      setSearchResults([]);
+    }
+  }
 
   return (
     <div className="home-container">
-      <h1>Film Popolari</h1>
 
-      <div className="movie-grid">
-        {movies.map(movie => (
-          <Link
-            to={`/movie/${movie.id}`}
-            key={movie.id}
-            className="movie-card"
-          >
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-            />
-            <p>{movie.title}</p>
-          </Link>
-        ))}
+      {/* 🔍 Barra ricerca */}
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Cerca un film..."
+          value={searchText}
+          onChange={handleSearch}
+        />
       </div>
+
+      {/* Risultati ricerca */}
+      {searchResults.length > 0 && (
+        <MovieRow title="Risultati ricerca" movies={searchResults} />
+      )}
+
+      {/* Categorie */}
+      <MovieRow title="Trending" movies={trending} />
+      <MovieRow title="Popolari" movies={popular} />
+      <MovieRow title="Top Rated" movies={topRated} />
+      <MovieRow title="Prossime uscite" movies={upcoming} />
     </div>
   );
 }
