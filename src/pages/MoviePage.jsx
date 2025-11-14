@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMovieDetails } from "../api/tmdb";
+import { moviesAPI } from "../api/tmdb";
 import "../styles/MoviePage.css";
 
 export default function MoviePage() {
@@ -9,7 +9,7 @@ export default function MoviePage() {
 
   useEffect(() => {
     async function loadMovie() {
-      const data = await getMovieDetails(id);
+      const data = await moviesAPI.details(id);
       setMovie(data);
     }
     loadMovie();

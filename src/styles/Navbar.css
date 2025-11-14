@@ -1,0 +1,20 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: black;
+  color: white;
+}
+
+.navbar a {
+  color: white;
+  margin-right: 20px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.logo {
+  font-size: 24px;
+  color: red;
+  font-weight: bold;
+}

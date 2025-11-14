@@ -1,0 +1,31 @@
+.banner {
+  height: 55vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  padding: 40px;
+  display: flex;
+  align-items: flex-end;
+  color: white;
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  max-width: 50%;
+}
+
+.banner h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.banner p {
+  opacity: 0.9;
+}

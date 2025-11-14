@@ -1,68 +1,55 @@
 import { useEffect, useState } from "react";
-import {
-  getPopularMovies,
-  getTopRatedMovies,
-  getTrendingMovies,
-  getUpcomingMovies,
-  searchMovies
-} from "../api/tmdb";
-
-import MovieRow from "./MovieRow";
+import { moviesAPI, tvAPI } from "../api/tmdb";
+import Banner from "../components/Banner";
+import MovieRow from "../components/MovieRow";
 import "../styles/HomePage.css";
 
 export default function HomePage() {
+  const [bannerItem, setBannerItem] = useState(null);
+
   const [popular, setPopular] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [trending, setTrending] = useState([]);
-  const [upcoming, setUpcoming] = useState([]);
 
-  const [searchText, setSearchText] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [tvPopular, setTvPopular] = useState([]);
+  const [tvTrending, setTvTrending] = useState([]);
 
   useEffect(() => {
-    async function loadAll() {
-      setPopular(await getPopularMovies());
-      setTopRated(await getTopRatedMovies());
-      setTrending(await getTrendingMovies());
-      setUpcoming(await getUpcomingMovies());
-    }
     loadAll();
   }, []);
 
-  async function handleSearch(e) {
-    const q = e.target.value;
-    setSearchText(q);
+  async function loadAll() {
+    const pop = await moviesAPI.popular();
+    setPopular(pop.results);
 
-    if (q.length >= 2) {
-      setSearchResults(await searchMovies(q));
-    } else {
-      setSearchResults([]);
-    }
+    const top = await moviesAPI.topRated();
+    setTopRated(top.results);
+
+    const trend = await moviesAPI.trending();
+    setTrending(trend.results);
+
+    const tvp = await tvAPI.popular();
+    setTvPopular(tvp.results);
+
+    const tvt = await tvAPI.trending();
+    setTvTrending(tvt.results);
+
+    // Film random nel banner
+    setBannerItem(pop.results[Math.floor(Math.random() * pop.results.length)]);
   }
 
   return (
-    <div className="home-container">
+    <div className="home">
+      <Banner item={bannerItem} />
 
-      {/* 🔍 Barra ricerca */}
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Cerca un film..."
-          value={searchText}
-          onChange={handleSearch}
-        />
+      <div className="home-rows">
+        <MovieRow title="🔥 Popolari" items={popular} />
+        <MovieRow title="⭐ Top Rated" items={topRated} />
+        <MovieRow title="📈 In Tendenza" items={trending} />
+
+        <MovieRow title="📺 Serie TV Popolari" items={tvPopular} type="tv" />
+        <MovieRow title="✨ Serie TV in Tendenza" items={tvTrending} type="tv" />
       </div>
-
-      {/* Risultati ricerca */}
-      {searchResults.length > 0 && (
-        <MovieRow title="Risultati ricerca" movies={searchResults} />
-      )}
-
-      {/* Categorie */}
-      <MovieRow title="Trending" movies={trending} />
-      <MovieRow title="Popolari" movies={popular} />
-      <MovieRow title="Top Rated" movies={topRated} />
-      <MovieRow title="Prossime uscite" movies={upcoming} />
     </div>
   );
 }
