@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import "../styles/Global.css"; // se hai global.css
+import "../styles/Global.css"; 
 
 export default function MainLayout() {
   return (

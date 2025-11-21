@@ -1,15 +1,73 @@
-.movie-details-container {
-  padding: 30px;
+/* Pagina dettaglio intera */
+.movie-details-page {
+  margin-top: 0;
+  padding: 0;
 }
 
-.movie-image {
+/* HERO stile Netflix */
+.hero {
+  position: relative;
   width: 100%;
-  max-width: 600px;
-  border-radius: 12px;
+  height: 65vh;
+  background-size: cover;
+  background-position: center;
 }
 
-.movie-details-container p {
-  max-width: 600px;
-  margin-top: 15px;
+/* Overlay per rendere leggibile il testo */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 30%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+}
+
+/* ❤️ Icona Preferiti */
+.fav-icon-detail {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.fav-icon-detail .heart {
+  font-size: 42px;
+  transition: 0.2s;
+}
+
+.heart.filled {
+  color: red;
+}
+
+.heart.outline {
+  color: white;
+  opacity: 0.9;
+}
+
+.heart:hover {
+  transform: scale(1.15);
+}
+
+/* Testo dentro il banner */
+.hero-content {
+  position: absolute;
+  bottom: 30px;
+  left: 50px;
+  max-width: 55%;
+  z-index: 15;
+  color: white;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 18px;
   opacity: 0.8;
+  line-height: 1.4;
 }

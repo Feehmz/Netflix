@@ -1,33 +1,57 @@
-.row-container {
-  margin-top: 30px;
+.row {
+  margin-bottom: 40px;
 }
 
-.row-container h2 {
-  margin-bottom: 10px;
-}
-
-.row-scroll {
+.row-list {
   display: flex;
+  gap: 20px;
   overflow-x: auto;
-  gap: 15px;
   padding-bottom: 10px;
 }
 
-.row-scroll::-webkit-scrollbar {
-  height: 6px;
+.row-card {
+  position: relative; /* 👈 OBBLIGATORIO */
+  width: 180px;
+  flex-shrink: 0;
 }
 
-.row-scroll::-webkit-scrollbar-thumb {
-  background: #444;
-  border-radius: 3px;
-}
-
-.row-item img {
-  width: 150px;
+.row-card img {
+  width: 100%;
+  height: auto;
   border-radius: 6px;
-  transition: transform 0.2s;
+  display: block;
 }
 
-.row-item img:hover {
-  transform: scale(1.08);
+.row-card p {
+  margin-top: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ❤️ Icona card */
+.fav-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.heart {
+  font-size: 26px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.heart.outline {
+  color: white;
+  opacity: 0.8;
+}
+
+.heart.filled {
+  color: red;
+}
+
+.heart:hover {
+  transform: scale(1.2);
+  opacity: 1;
 }

@@ -1,12 +1,15 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import type { FormEvent } from "react";  // 👈 importiamo il tipo
+import type { FormEvent } from "react";
+import { useFavorites } from "../context/FavoritesContext";
 import "../styles/Navbar.css";
+
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { favorites } = useFavorites();
 
   // search nella navbar
-function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const raw = formData.get("q");
@@ -15,7 +18,7 @@ function handleSubmit(e: FormEvent<HTMLFormElement>) {
     if (query.length > 0) {
       navigate(`/search?q=${encodeURIComponent(query)}`);
     }
-}
+  }
 
 
   return (
@@ -37,9 +40,13 @@ function handleSubmit(e: FormEvent<HTMLFormElement>) {
           Serie TV
         </NavLink>
 
-        <NavLink to="/favorites" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-          Preferiti
+        <NavLink
+          to="/favorites"
+          className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+        >
+          Preferiti ({favorites.length})
         </NavLink>
+
 
         <NavLink to="/about" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
           About
