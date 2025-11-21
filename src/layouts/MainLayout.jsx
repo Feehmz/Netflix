@@ -1,6 +1,8 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import "../styles/Global.css"; 
+import Footer from "../components/Footer";
 
 export default function MainLayout() {
   return (
@@ -10,6 +12,7 @@ export default function MainLayout() {
         <Outlet />
       </main>
       {/* footer opzionale in futuro */}
+      <Footer />
     </div>
   );
 }

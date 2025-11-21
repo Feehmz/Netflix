@@ -34,7 +34,6 @@ export default function HomePage() {
     const tvt = await tvAPI.trending();
     setTvTrending(tvt.results);
 
-    // Film random nel banner
     setBannerItem(pop.results[Math.floor(Math.random() * pop.results.length)]);
   }
 

@@ -1,0 +1,26 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #111;
+  color: #fff;
+  flex-wrap: wrap;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 15px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-left, .footer-center, .footer-right {
+  margin: 10px 0;
+}
+
+.social-links a {
+  margin-right: 10px;
+}
