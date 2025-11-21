@@ -15,7 +15,8 @@ export const moviesAPI = {
   topRated: () => get(`${BASE}/movie/top_rated?api_key=${API_KEY}`),
   trending: () => get(`${BASE}/trending/movie/week?api_key=${API_KEY}`),
   details: (id) => get(`${BASE}/movie/${id}?api_key=${API_KEY}`),
-  credits: (id) => get(`${BASE}/movie/${id}/credits?api_key=${API_KEY}`)
+  credits: (id) => get(`${BASE}/movie/${id}/credits?api_key=${API_KEY}`),
+  videos: (id) => get(`${BASE}/movie/${id}/videos?api_key=${API_KEY}`)
 };
 
 
