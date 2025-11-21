@@ -13,14 +13,11 @@ export default function MovieRow({ title, items }) {
       <div className="row-list">
         {items.map((movie) => (
           <div key={movie.id} className="row-card">
-            
+
             {/* Cuore in sovrimpressione */}
             <div
               className="fav-icon"
               onClick={(e) => {
-                e.stopPropagation(); // impedisce click sulla card
-                e.preventDefault();
-
                 if (isFavorite(movie.id)) {
                   removeFavorite(movie.id);
                 } else {
@@ -32,8 +29,19 @@ export default function MovieRow({ title, items }) {
                     media_type: movie.media_type || "movie",
                   });
                 }
+
+                // animazione cuore
+                const heart = e.currentTarget.querySelector(".heart");
+                if (heart) {
+                  heart.classList.add("clicked");
+
+                  setTimeout(() => {
+                    heart.classList.remove("clicked");
+                  }, 400);
+                }
               }}
             >
+
               {isFavorite(movie.id) ? (
                 <AiFillHeart className="heart filled" />
               ) : (
