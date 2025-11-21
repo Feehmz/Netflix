@@ -7,11 +7,11 @@ export default function Footer() {
     return (<footer className="footer"> <div className="footer-left"> <NavLink to="/" className="footer-logo">
         NetFlexx </NavLink> <p>© {year} NetFlexx. Tutti i diritti riservati.</p> </div>
 
-        ```
         <div className="footer-center">
             <NavLink to="/about" className="footer-link">About</NavLink>
-            <NavLink to="/contact" className="footer-link">Contatti</NavLink>
+            <NavLink to="/favorites" className="footer-link">Preferiti</NavLink>
             <NavLink to="/privacy" className="footer-link">Privacy</NavLink>
+            <NavLink to="/" className="footer-link">Home</NavLink>
         </div>
 
         <div className="footer-right">
