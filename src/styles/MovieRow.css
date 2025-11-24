@@ -27,3 +27,8 @@
   width: 100%;
   border-radius: 6px;
 }
+
+#movie-slider .swiper-button-next,
+#movie-slider .swiper-button-prev {
+  color: red;
+}

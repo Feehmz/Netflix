@@ -18,6 +18,7 @@ export default function MovieRow({ title, items }) {
       <h2>{title}</h2>
 
       <Swiper
+        id="movie-slider"
         modules={[Navigation]}
         navigation
         spaceBetween={15}
@@ -27,8 +28,7 @@ export default function MovieRow({ title, items }) {
         {items.map((movie) => (
           <SwiperSlide key={movie.id}>
             <div className="row-card">
-              
-              {/* CUORE */}
+
               <div
                 className="fav-icon"
                 onClick={(e) => {
@@ -58,7 +58,7 @@ export default function MovieRow({ title, items }) {
                 )}
               </div>
 
-              
+
               <Link to={`/movie/${movie.id}`}>
                 <img
                   src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}

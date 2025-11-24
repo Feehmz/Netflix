@@ -11,5 +11,5 @@ body {
 }
 
 .app-main {
-  padding-top: 70px; /* spazio per la navbar fixed se la usi così */
+  padding-top: 60px; 
 }
