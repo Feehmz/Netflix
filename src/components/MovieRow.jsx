@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useFavorites } from "../context/FavoritesContext";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+
+import { Navigation } from "swiper/modules";
+
 import "../styles/MovieRow.css";
 
 export default function MovieRow({ title, items }) {
@@ -10,56 +17,60 @@ export default function MovieRow({ title, items }) {
     <div className="row">
       <h2>{title}</h2>
 
-      <div className="row-list">
+      <Swiper
+        modules={[Navigation]}
+        navigation
+        spaceBetween={15}
+        slidesPerView={6}
+        className="movie-swiper"
+      >
         {items.map((movie) => (
-          <div key={movie.id} className="row-card">
+          <SwiperSlide key={movie.id}>
+            <div className="row-card">
+              
+              {/* CUORE */}
+              <div
+                className="fav-icon"
+                onClick={(e) => {
+                  if (isFavorite(movie.id)) {
+                    removeFavorite(movie.id);
+                  } else {
+                    addFavorite({
+                      id: movie.id,
+                      title: movie.title,
+                      name: movie.name,
+                      poster_path: movie.poster_path,
+                      media_type: movie.media_type || "movie",
+                    });
+                  }
 
-            {/* Cuore in sovrimpressione */}
-            <div
-              className="fav-icon"
-              onClick={(e) => {
-                if (isFavorite(movie.id)) {
-                  removeFavorite(movie.id);
-                } else {
-                  addFavorite({
-                    id: movie.id,
-                    title: movie.title,
-                    name: movie.name,
-                    poster_path: movie.poster_path,
-                    media_type: movie.media_type || "movie",
-                  });
-                }
+                  const heart = e.currentTarget.querySelector(".heart");
+                  if (heart) {
+                    heart.classList.add("clicked");
+                    setTimeout(() => heart.classList.remove("clicked"), 400);
+                  }
+                }}
+              >
+                {isFavorite(movie.id) ? (
+                  <AiFillHeart className="heart filled" />
+                ) : (
+                  <AiOutlineHeart className="heart outline" />
+                )}
+              </div>
 
-                // animazione cuore
-                const heart = e.currentTarget.querySelector(".heart");
-                if (heart) {
-                  heart.classList.add("clicked");
+              
+              <Link to={`/movie/${movie.id}`}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                  alt={movie.title}
+                />
+              </Link>
 
-                  setTimeout(() => {
-                    heart.classList.remove("clicked");
-                  }, 400);
-                }
-              }}
-            >
-
-              {isFavorite(movie.id) ? (
-                <AiFillHeart className="heart filled" />
-              ) : (
-                <AiOutlineHeart className="heart outline" />
-              )}
+              <p>{movie.title}</p>
             </div>
-
-            <Link to={`/movie/${movie.id}`}>
-              <img
-                src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                alt={movie.title}
-              />
-            </Link>
-
-            <p>{movie.title}</p>
-          </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   );
 }
