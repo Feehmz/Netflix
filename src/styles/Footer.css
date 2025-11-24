@@ -6,6 +6,7 @@
   background-color: #111;
   color: #fff;
   flex-wrap: wrap;
+  margin-top:auto;
 }
 
 .footer a {
