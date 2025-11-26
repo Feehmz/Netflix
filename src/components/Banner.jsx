@@ -3,12 +3,15 @@ import "./../styles/Banner.css";
 export default function Banner({ item }) {
   if (!item) return null;
 
-  const image = `https://image.tmdb.org/t/p/original${item.backdrop_path}`;
+  const backdrop = item.backdrop_path
+    ? `https://image.tmdb.org/t/p/original${item.backdrop_path}`
+    : "/src/assets/no-backdrop.jpg";
+
 
   return (
     <div
       className="banner"
-      style={{ backgroundImage: `url(${image})` }}
+       style={{ backgroundImage: `url(${backdrop})` }}
     >
       <div className="banner-overlay" />
 

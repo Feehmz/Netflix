@@ -74,6 +74,7 @@
 
 /* Info film */
 .movie-info {
+  padding-left: 50px;
   margin-top: 20px;
   color: white;
   font-size: 18px;

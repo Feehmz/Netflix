@@ -1,11 +1,22 @@
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE = "https://api.themoviedb.org/3";
 
-// funzione GET generica
 async function get(url) {
-  const res = await fetch(url);
-  return res.json();
+  try {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      console.warn("TMDB error", res.status, url);
+      return null; // importante
+    }
+
+    return res.json();
+  } catch (e) {
+    console.error("TMDB fetch error:", e);
+    return null;
+  }
 }
+
 
 // ======================
 //   FILM
@@ -19,15 +30,24 @@ export const moviesAPI = {
   videos: (id) => get(`${BASE}/movie/${id}/videos?api_key=${API_KEY}`)
 };
 
-
 // ======================
 //   SERIE TV
 // ======================
 export const tvAPI = {
   popular: () => get(`${BASE}/tv/popular?api_key=${API_KEY}`),
   trending: () => get(`${BASE}/trending/tv/week?api_key=${API_KEY}`),
-  details: (id) => get(`${BASE}/tv/${id}?api_key=${API_KEY}`),
+
+  details: (id) =>
+    get(
+      `${BASE}/tv/${id}?api_key=${API_KEY}&append_to_response=credits,videos`
+    ),
+
+  credits: (id) => get(`${BASE}/tv/${id}/credits?api_key=${API_KEY}`),
+  videos: (id) => get(`${BASE}/tv/${id}/videos?api_key=${API_KEY}`),
 };
+
+
+
 
 // ======================
 //   SEARCH
