@@ -1,10 +1,8 @@
-/* Pagina dettaglio intera */
 .movie-details-page {
   margin-top: 0;
   padding: 0;
 }
 
-/* HERO stile Netflix */
 .hero {
   position: relative;
   width: 100%;
@@ -13,7 +11,6 @@
   background-position: center;
 }
 
-/* Overlay per rendere leggibile il testo */
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -24,7 +21,6 @@
   );
 }
 
-/* ❤️ Icona Preferiti */
 .fav-icon-detail {
   position: absolute;
   top: 20px;
@@ -51,7 +47,6 @@
   transform: scale(1.15);
 }
 
-/* Testo dentro il banner */
 .hero-content {
   position: absolute;
   bottom: 30px;
@@ -72,7 +67,6 @@
   line-height: 1.4;
 }
 
-/* Info film */
 .movie-info {
   padding-left: 50px;
   margin-top: 20px;
@@ -91,7 +85,6 @@
   font-size: 14px;
 }
 
-/* Cast */
 .cast-section {
   margin-top: 40px;
   padding: 0 50px;
@@ -125,7 +118,6 @@
   font-size: 15px;
 }
 
-/* Trailer Section */
 .trailer-section {
   margin-top: 50px;
   padding: 0 50px;

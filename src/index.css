@@ -6,3 +6,9 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.app-root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

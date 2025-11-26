@@ -1,3 +1,67 @@
 .page {
   padding: 80px 30px 30px;
 }
+
+.about {
+  min-height: 100vh;
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  background: #111;
+  color: #fff;
+}
+
+.about-container {
+  width: 100%;
+  max-width: 900px;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #e50914;
+}
+
+.subtitle {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.about-section {
+  margin-bottom: 35px;
+  padding: 25px;
+  background: #181818;
+  border-radius: 12px;
+  border: 1px solid #292929;
+  transition: transform 0.2s ease;
+}
+
+.about-section:hover {
+  transform: translateY(-3px);
+}
+
+.about-section h2 {
+  color: #e50914;
+  margin-bottom: 10px;
+}
+
+ul {
+  margin-left: 20px;
+  line-height: 1.7;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

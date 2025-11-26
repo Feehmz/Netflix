@@ -1,5 +1,4 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import type { FormEvent } from "react";
 import { useFavorites } from "../context/FavoritesContext";
 import "../styles/Navbar.css";
 
@@ -8,8 +7,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { favorites } = useFavorites();
 
-  // search nella navbar
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const raw = formData.get("q");
