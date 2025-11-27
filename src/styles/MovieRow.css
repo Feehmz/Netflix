@@ -31,4 +31,5 @@
 #movie-slider .swiper-button-next,
 #movie-slider .swiper-button-prev {
   color: red;
+  margin-top: -60px;
 }

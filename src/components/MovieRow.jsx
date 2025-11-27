@@ -46,6 +46,26 @@ export default function MovieRow({ title, items = [] }) {
         navigation
         spaceBetween={15}
         slidesPerView={6}
+        breakpoints={{
+          1400: {
+            slidesPerView: 6,
+          },
+          1200: {
+            slidesPerView: 5,
+          },
+          992: {
+            slidesPerView: 4,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          576: {
+            slidesPerView: 2,
+          },
+          0: {
+            slidesPerView: 1.4,
+          },
+        }}
         className="movie-swiper"
       >
         {items.map((movie) => {
