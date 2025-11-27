@@ -54,6 +54,8 @@ export default function MoviesListPage() {
     <div className="movies-page">
       <Banner item={bannerMovie} />
 
+      <h1 className="page-title">📺 Movies</h1>
+
       <div className="movies-rows">
         <MovieRow title="🔥 Film Popolari" items={popular} />
         <MovieRow title="⭐ Film Top Rated" items={topRated} />

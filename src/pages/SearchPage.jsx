@@ -1,93 +1,85 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { searchAPI } from "../api/tmdb";
 import { getPoster } from "../utils/imageFallback";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { useFavorites } from "../context/FavoritesContext";
-
 import "../styles/SearchPage.css";
 
 export default function SearchPage() {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
+
   const query = params.get("q") || "";
 
   const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
-
+  // quando cambia query → rifacciamo la ricerca
   useEffect(() => {
+    if (!query) {
+      setResults([]);
+      return;
+    }
+
     async function load() {
       setLoading(true);
-      const data = await searchAPI.multi(query);
 
+      const data = await searchAPI.multi(query);
       setResults(data?.results || []);
+
       setLoading(false);
     }
 
     load();
   }, [query]);
 
-  if (loading) return <h2 className="loading">Caricamento...</h2>;
+  function handleSubmit(e) {
+    e.preventDefault();
+    const value = e.target.search.value.trim();
+    if (value) {
+      navigate(`/search?q=${value}`);
+    }
+  }
 
   return (
     <div className="search-page fade-in">
-      <h1>
-        Risultati per: <span className="query">"{query}"</span>
-      </h1>
+      <h1 className="search-title">Risultati per: <span>{query}</span></h1>
+
+      {/* Mini search interna (opzionale) */}
+      <form className="search-inline" onSubmit={handleSubmit}>
+        <input
+          name="search"
+          type="text"
+          placeholder="Cerca ancora..."
+          defaultValue={query}
+        />
+      </form>
+
+      {loading && <p className="loading">Caricamento...</p>}
+
+      {!loading && results.length === 0 && query && (
+        <p className="no-results">Nessun risultato trovato.</p>
+      )}
 
       <div className="search-grid">
         {results.map((item) => {
-          if (!item.id) return null;
+          // skip risultati senza poster (optional)
+          if (!item.poster_path && !item.backdrop_path) return null;
 
-          // 🔥 Determina se è film o serie TV
-          const type =
-            item.media_type ||
-            (item.first_air_date ? "tv" : "movie");
-
-          const title = item.title || item.name || "Titolo non disponibile";
+          const type = item.media_type === "tv" ? "tv" : "movie";
 
           return (
-            <div key={item.id} className="search-card">
+            <div
+              key={item.id}
+              className="search-card"
+              onClick={() => navigate(`/${type}/${item.id}`)}
+            >
+              <img
+                src={getPoster(item)}
+                alt={item.title || item.name}
+                loading="lazy"
+              />
 
-              {/* ❤️ icona preferiti */}
-              <div
-                className="fav-icon"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-
-                  if (isFavorite(item.id)) {
-                    removeFavorite(item.id);
-                  } else {
-                    addFavorite({
-                      id: item.id,
-                      title: item.title,
-                      name: item.name,
-                      poster_path: item.poster_path,
-                      media_type: type,
-                    });
-                  }
-
-                  const heart = e.currentTarget.querySelector(".heart");
-                  if (heart) {
-                    heart.classList.add("clicked");
-                    setTimeout(() => heart.classList.remove("clicked"), 350);
-                  }
-                }}
-              >
-                {isFavorite(item.id) ? (
-                  <AiFillHeart className="heart filled" />
-                ) : (
-                  <AiOutlineHeart className="heart outline" />
-                )}
-              </div>
-
-              {/* 📌 LINK DINAMICO: film → /movie/id, serie → /tv/id */}
-              <Link to={`/${type}/${item.id}`}>
-                <img src={getPoster(item)} alt={title} />
-                <p>{title}</p>
-              </Link>
+              <h3>{item.title || item.name}</h3>
             </div>
           );
         })}

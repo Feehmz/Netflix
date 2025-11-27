@@ -4,6 +4,9 @@
 
 .row-card {
   position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  margin-left: 10px;
 }
 
 .fav-icon {
@@ -26,10 +29,27 @@
 .row-card img {
   width: 100%;
   border-radius: 6px;
+  transition: transform 0.25s ease;
+}
+
+/* effetto HOVER stile Netflix */
+.row-card:hover {
+  transform: scale(1.05);
+  z-index: 20;
+}
+
+
+
+/* ombra al passaggio */
+.row-card:hover {
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
 }
 
 #movie-slider .swiper-button-next,
 #movie-slider .swiper-button-prev {
   color: red;
   margin-top: -60px;
+  padding: 5px;
+  border-radius: 50%;
+  background: rgb(11, 11, 11, 80%);
 }

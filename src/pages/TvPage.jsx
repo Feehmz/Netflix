@@ -49,7 +49,6 @@ export default function TvPage() {
   if (loading) return <h2 className="detail-loading">Caricamento...</h2>;
   if (!tv) return <h2 className="detail-error">{error}</h2>;
 
-  // 🔥 ADESSO tv È DEFINITA, POSSIAMO ACCEDERE A VIDEOS
   const trailer =
     tv.videos?.results?.find(
       (v) =>
@@ -93,11 +92,11 @@ export default function TvPage() {
             isFav
               ? removeFavorite(tv.id)
               : addFavorite({
-                  id: tv.id,
-                  title: tv.name,
-                  poster_path: tv.poster_path,
-                  media_type: "tv",
-                })
+                id: tv.id,
+                title: tv.name,
+                poster_path: tv.poster_path,
+                media_type: "tv",
+              })
           }
         >
           {isFav ? (
@@ -118,13 +117,13 @@ export default function TvPage() {
 
             {genres.length > 0 && (
               <>
-                <span className="separator">•</span>
+                <span className="separator"> • </span>
                 <span className="genres">{genres.join(", ")}</span>
               </>
             )}
 
             <>
-              <span className="separator">•</span>
+              <span className="separator"> • </span>
               <span className="year">{releaseDate}</span>
             </>
           </div>
@@ -145,6 +144,21 @@ export default function TvPage() {
         </div>
       </div>
 
+      {/* CAST */}
+      {credits?.cast?.length > 0 && (
+        <div className="cast-section fade-in">
+          <h2>Cast principale</h2>
+          <div className="cast-list">
+            {credits.cast.slice(0, 8).map((c) => (
+              <div key={c.id} className="cast-card">
+                <img src={getPoster(c)} alt={c.name} loading="lazy" />
+                <p>{c.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* TRAILER */}
       {trailerKey && (
         <div id="trailer-section" className="trailer-section fade-in">
@@ -160,20 +174,7 @@ export default function TvPage() {
         </div>
       )}
 
-      {/* CAST */}
-      {credits?.cast?.length > 0 && (
-        <div className="cast-section fade-in">
-          <h2>Cast principale</h2>
-          <div className="cast-list">
-            {credits.cast.slice(0, 8).map((c) => (
-              <div key={c.id} className="cast-card">
-                <img src={getPoster(c)} alt={c.name} loading="lazy" />
-                <p>{c.name}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+
     </div>
   );
 }

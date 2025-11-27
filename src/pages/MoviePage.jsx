@@ -25,6 +25,7 @@ export default function MoviePage() {
         setLoading(true);
         setError(null);
 
+        // dettagli + credits + videos in parallelo
         const [data, creditData, videoData] = await Promise.all([
           moviesAPI.details(id),
           moviesAPI.credits(id),
@@ -40,14 +41,21 @@ export default function MoviePage() {
         setCredits(creditData || { cast: [] });
 
         const videos = videoData?.results ?? [];
-        const trailer = videos.find(
-          (v) => v.type === "Trailer" && v.site === "YouTube"
-        );
-        const fallback = videos.find((v) => v.site === "YouTube");
+        const trailer =
+          videos.find(
+            (v) =>
+              (v.type === "Trailer" ||
+                v.type === "Teaser" ||
+                v.type === "Clip") &&
+              v.site === "YouTube"
+          ) || null;
+
+        const fallback =
+          videos.find((v) => v.site === "YouTube") || null;
 
         setTrailerKey(trailer?.key || fallback?.key || null);
       } catch (err) {
-        console.error(err);
+        console.error("Errore Movie:", err);
         setError("Errore nel caricamento del film.");
       } finally {
         setLoading(false);
@@ -68,7 +76,6 @@ export default function MoviePage() {
       : "N/D";
 
   const releaseDate = movie.release_date || "N/D";
-
   const genres = movie.genres?.map((g) => g.name) || [];
 
   const isFav = isFavorite(movie.id);
@@ -82,19 +89,19 @@ export default function MoviePage() {
       >
         <div className="hero-overlay" />
 
-        {/* ICONA PREFERITI */}
+        {/* ❤️ Preferiti */}
         <div
           className="fav-icon-detail"
-          onClick={() => {
-            if (isFav) removeFavorite(movie.id);
-            else
-              addFavorite({
+          onClick={() =>
+            isFav
+              ? removeFavorite(movie.id)
+              : addFavorite({
                 id: movie.id,
                 title: movie.title,
                 poster_path: movie.poster_path,
                 media_type: "movie",
-              });
-          }}
+              })
+          }
         >
           {isFav ? (
             <AiFillHeart className="heart filled" />
@@ -103,37 +110,37 @@ export default function MoviePage() {
           )}
         </div>
 
-        {/* TESTO HERO */}
+        {/* Contenuto hero */}
         <div className="hero-content">
           <h1>{movie.title}</h1>
           <p>{movie.overview || "Nessuna descrizione disponibile."}</p>
 
-          {/* META INFO (VOTO • GENERI • DATA COMPLETA) */}
+          {/* ⭐ Voto • Generi • Data completa */}
           <div className="hero-meta">
             <span className="rating">⭐ {vote}</span>
 
             {genres.length > 0 && (
               <>
-                <span className="separator">•</span>
+                <span className="separator"> • </span>
                 <span className="genres">{genres.join(", ")}</span>
               </>
             )}
 
             <>
-              <span className="separator">•</span>
+              <span className="separator"> • </span>
               <span className="year">{releaseDate}</span>
             </>
           </div>
 
-          {/* BOTTONE TRAILER */}
+          {/* Bottone trailer */}
           {trailerKey && (
             <button
               className="watch-trailer-btn"
-              onClick={() => {
+              onClick={() =>
                 document
                   .getElementById("trailer-section")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
             >
               ▶ Guarda Trailer
             </button>
@@ -164,7 +171,6 @@ export default function MoviePage() {
             <iframe
               src={`https://www.youtube.com/embed/${trailerKey}`}
               frameBorder="0"
-              allow="autoplay; encrypted-media"
               allowFullScreen
               title="Trailer"
             />
