@@ -1,0 +1,19 @@
+.movies-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #111;
+  color: white;
+}
+
+.movies-rows {
+  padding: 20px 0;
+}
+
+.loading,
+.error {
+  color: white;
+  text-align: center;
+  padding: 40px;
+  font-size: 1.4rem;
+}
+

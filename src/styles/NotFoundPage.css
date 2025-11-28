@@ -1,0 +1,60 @@
+.notfound-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 77.9vh;
+  background: linear-gradient(125deg, #ff5353, #000000);
+  color: white;
+  text-align: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.notfound-content {
+  max-width: 500px;
+}
+
+.notfound-code {
+  font-size: 8rem;
+  margin: 0;
+  animation: bounce 1s infinite;
+}
+
+.notfound-message {
+  font-size: 1.5rem;
+  margin: 10px 0 20px;
+}
+
+.notfound-img {
+  width: 200px;
+  margin: 20px 0;
+  animation: float 3s ease-in-out infinite;
+}
+
+.notfound-btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #000000;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.notfound-btn:hover {
+  background-color: #ff0000;
+  transform: scale(1.05);
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}

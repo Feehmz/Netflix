@@ -1,87 +1,83 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { moviesAPI } from "../api/tmdb";
+import { tvAPI } from "../api/tmdb";
 import { useFavorites } from "../context/FavoritesContext";
 
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { getBackdrop, getPoster } from "../utils/imageFallback";
 
-import "../styles/MoviePage.css";
+import "../styles/TvPage.css";
 
-export default function MoviePage() {
+export default function TvPage() {
   const { id } = useParams();
 
-  const [movie, setMovie] = useState(null);
+  const [tv, setTv] = useState(null);
   const [credits, setCredits] = useState(null);
-  const [trailerKey, setTrailerKey] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
   useEffect(() => {
-    async function loadMovie() {
+    async function load() {
       try {
         setLoading(true);
         setError(null);
 
-        // dettagli + credits + videos in parallelo
-        const [data, creditData, videoData] = await Promise.all([
-          moviesAPI.details(id),
-          moviesAPI.credits(id),
-          moviesAPI.videos(id),
-        ]);
+        // CARICO DETTAGLI + CREDITS + VIDEOS tramite append_to_response
+        const data = await tvAPI.details(id);
 
         if (!data) {
           setError("Contenuto non trovato.");
           return;
         }
 
-        setMovie(data);
-        setCredits(creditData || { cast: [] });
+        setTv(data);
+        setCredits(data.credits || { cast: [] });
 
-        const videos = videoData?.results ?? [];
-        const trailer =
-          videos.find(
-            (v) =>
-              (v.type === "Trailer" ||
-                v.type === "Teaser" ||
-                v.type === "Clip") &&
-              v.site === "YouTube"
-          ) || null;
-
-        const fallback =
-          videos.find((v) => v.site === "YouTube") || null;
-
-        setTrailerKey(trailer?.key || fallback?.key || null);
       } catch (err) {
-        console.error("Errore Movie:", err);
-        setError("Errore nel caricamento del film.");
+        console.error("Errore nel caricamento TV:", err);
+        setError("Errore nel caricamento della serie TV.");
       } finally {
         setLoading(false);
       }
     }
 
-    loadMovie();
+    load();
   }, [id]);
 
   if (loading) return <h2 className="detail-loading">Caricamento...</h2>;
-  if (!movie) return <h2 className="detail-error">{error}</h2>;
+  if (!tv) return <h2 className="detail-error">{error}</h2>;
 
-  const backdrop = getBackdrop(movie);
+  const trailer =
+    tv.videos?.results?.find(
+      (v) =>
+        (v.type === "Trailer" ||
+          v.type === "Teaser" ||
+          v.type === "Clip") &&
+        v.site === "YouTube"
+    ) || null;
 
+  const fallback =
+    tv.videos?.results?.find((v) => v.site === "YouTube") || null;
+
+  const trailerKey = trailer?.key || fallback?.key || null;
+
+  // META
+  const backdrop = getBackdrop(tv);
   const vote =
-    movie.vote_average && movie.vote_average > 0
-      ? movie.vote_average.toFixed(1)
+    tv.vote_average && tv.vote_average > 0
+      ? tv.vote_average.toFixed(1)
       : "N/D";
 
-  const releaseDate = movie.release_date || "N/D";
-  const genres = movie.genres?.map((g) => g.name) || [];
+  const releaseDate = tv.first_air_date || "N/D";
+  const genres = tv.genres?.map((g) => g.name) || [];
 
-  const isFav = isFavorite(movie.id);
+  const isFav = isFavorite(tv.id);
 
   return (
     <div className="movie-details-page">
+
       {/* HERO */}
       <div
         className="hero fade-in"
@@ -89,17 +85,17 @@ export default function MoviePage() {
       >
         <div className="hero-overlay" />
 
-        {/* ❤️ Preferiti */}
+        {/* ICONA PREFERITI */}
         <div
           className="fav-icon-detail"
           onClick={() =>
             isFav
-              ? removeFavorite(movie.id)
+              ? removeFavorite(tv.id)
               : addFavorite({
-                id: movie.id,
-                title: movie.title,
-                poster_path: movie.poster_path,
-                media_type: "movie",
+                id: tv.id,
+                title: tv.name,
+                poster_path: tv.poster_path,
+                media_type: "tv",
               })
           }
         >
@@ -110,12 +106,12 @@ export default function MoviePage() {
           )}
         </div>
 
-        {/* Contenuto hero */}
+        {/* CONTENUTO HERO */}
         <div className="hero-content">
-          <h1>{movie.title}</h1>
-          <p>{movie.overview || "Nessuna descrizione disponibile."}</p>
+          <h1>{tv.name}</h1>
+          <p>{tv.overview || "Nessuna descrizione disponibile."}</p>
 
-          {/* ⭐ Voto • Generi • Data completa */}
+          {/* META INFO */}
           <div className="hero-meta">
             <span className="rating">⭐ {vote}</span>
 
@@ -132,7 +128,7 @@ export default function MoviePage() {
             </>
           </div>
 
-          {/* Bottone trailer */}
+          {/* BOTTONE TRAILER */}
           {trailerKey && (
             <button
               className="watch-trailer-btn"
@@ -177,6 +173,8 @@ export default function MoviePage() {
           </div>
         </div>
       )}
+
+
     </div>
   );
 }
