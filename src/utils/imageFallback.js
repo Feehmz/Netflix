@@ -1,4 +1,3 @@
-// ATTENZIONE al path: questo file è in src/utils, quindi salgo di una cartella:
 import noImage from "../assets/no-image.jpg";
 
 const FALLBACK = noImage;

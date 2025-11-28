@@ -16,7 +16,6 @@
   z-index: 2000;
 }
 
-/* LEFT SECTION */
 .nav-left {
   display: flex;
   align-items: center;
@@ -24,14 +23,12 @@
   white-space: nowrap;
 }
 
-/* RIGHT SECTION */
 .nav-right {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-/* LOGO */
 .logo {
   font-size: 26px;
   font-weight: bold;
@@ -39,7 +36,6 @@
   text-decoration: none;
 }
 
-/* DESKTOP LINKS */
 .nav-links {
   display: flex;
   gap: 20px;
@@ -54,7 +50,6 @@
   color: #e50914;
 }
 
-/* DESKTOP SEARCH */
 .desktop-search {
   position: relative;
   display: block;
@@ -97,7 +92,6 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* HAMBURGER */
 .hamburger {
   padding: 36px;
   display: none;
@@ -107,7 +101,6 @@
   color: white;
 }
 
-/* MOBILE OVERLAY */
 .mobile-overlay {
   position: fixed;
   inset: 0;
@@ -143,7 +136,6 @@
   transform: translateX(0);
 }
 
-/* CLOSE BUTTON */
 .close-btn {
   align-self: flex-end;
   font-size: 28px;
@@ -153,7 +145,6 @@
   padding-right: 36px;
 }
 
-/* MOBILE SEARCH */
 .mobile-search-bar input {
   width: 100%;
   padding: 12px;

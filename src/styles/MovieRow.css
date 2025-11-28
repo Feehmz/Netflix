@@ -32,15 +32,11 @@
   transition: transform 0.25s ease;
 }
 
-/* effetto HOVER stile Netflix */
 .row-card:hover {
   transform: scale(1.05);
   z-index: 20;
 }
 
-
-
-/* ombra al passaggio */
 .row-card:hover {
   box-shadow: 0 0 20px rgba(0,0,0,0.6);
 }

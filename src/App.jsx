@@ -16,7 +16,6 @@ import TvListPage from "./pages/TvListPage";
 export default function App() {
   return (
     <BrowserRouter>
-      {/* 👇 QUI! Avvolgi tutta l’app */}
       <FavoritesProvider>
         <Routes>
           <Route element={<MainLayout />}>
